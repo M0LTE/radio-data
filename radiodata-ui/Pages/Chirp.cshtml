@@ -4,6 +4,25 @@
     ViewData["Title"] = "CHIRP";
 }
 
+@section Head{
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://data.m0lte.uk/chirp">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CHIRP - M0LTE's Radio Data">
+    <meta property="og:description" content="Get a CHIRP CSV containing UK repeaters ordered by distance from you">
+    <meta property="og:image" content="https://opengraph.b-cdn.net/production/images/38947c6c-03a4-4bfe-bea5-4cf6044fc550.png?token=ezBAvixT_kYe8_LjBwYgq7j057s7gpJN1jHV8xWMNfA&height=678&width=1200&expires=33263533971">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="data.m0lte.uk">
+    <meta property="twitter:url" content="https://data.m0lte.uk/chirp">
+    <meta name="twitter:title" content="CHIRP - M0LTE's Radio Data">
+    <meta name="twitter:description" content="Get a CHIRP CSV containing UK repeaters ordered by distance from you">
+    <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/images/38947c6c-03a4-4bfe-bea5-4cf6044fc550.png?token=ezBAvixT_kYe8_LjBwYgq7j057s7gpJN1jHV8xWMNfA&height=678&width=1200&expires=33263533971">
+
+    <!-- Meta Tags Generated via https://www.opengraph.xyz -->
+}
+
 <style type="text/css">
     .container {
         margin-top: 20px;
@@ -19,7 +38,7 @@
 </script>
 
 <div class="text-center">
-    <h1 class="display-4">CHIRP</h1>
+    <h1 class="display-4">UK Repeaters for CHIRP</h1>
 
     <div class="container">
         <a href="https://chirpmyradio.com/">CHIRP</a> is handy software for programming your radio, particularly for FM VHF / UHF repeaters.
@@ -28,6 +47,10 @@
     <div class="container">
         This page will allow you to input your Maidenhead locator square and get a CHIRP CSV file containing UK repeaters
         ordered by distance from your location, suitable for importing into CHIRP, to then write to your radio.
+    </div>
+
+    <div class="container">
+        The data comes from the <a href="https://api-beta.rsgb.online/">beta RSGB / ETCC API</a> so should be considered pretty authoritative.
     </div>
     
     <div class="container">
@@ -48,14 +71,6 @@
         Currently this supports analogue FM repeaters and simplex gateways only.
     </div>
 
-    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-    <script>
-        kofiWidgetOverlay.draw('m0lte', {
-            'type': 'floating-chat',
-            'floating-chat.donateButton.text': 'Tip Me',
-            'floating-chat.donateButton.background-color': '#00b9fe',
-            'floating-chat.donateButton.text-color': '#fff'
-        });
-    </script>
-
 </div>
+
+
