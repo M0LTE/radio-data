@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "chirpcsvlib", "chirpcsvlib\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoords", "DotNetCoords\DotNetCoords.csproj", "{56BCEDF4-725E-4CC3-9CE9-69DB2568DBA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "data-ui", "ukdata-ui\data-ui.csproj", "{7FF7CE3C-66C7-4F75-841E-999E6B34A529}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "data-ui", "radiodata-ui\radiodata-ui.csproj", "{7FF7CE3C-66C7-4F75-841E-999E6B34A529}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
