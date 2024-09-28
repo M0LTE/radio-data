@@ -1,0 +1,39 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "M0LTE's radio data tools";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    Tools available:
+    <p>
+        <a asp-page="/chirp">CHIRP CSVs</a>
+    </p>
+    
+    <div style="margin-top:50px"> 
+        Maps:
+        <p>
+            <a href="https://nodes.ukpacketradio.network/packet-network-map.html?rfonly=1">Live packet radio connectivity</a>
+        </p>
+        <p>
+            <a href="https://nodes.ukpacketradio.network/etcc-packet-map.html">ETCC-registered packet stations (including packet regions)</a>
+        </p>
+        <p>
+            <a href="https://nodes.ukpacketradio.network/etcc-voice-repeater-map.html">ETCC-registered voice repeaters</a>
+        </p>
+        <p>
+            <a href="https://nodes.ukpacketradio.network/etcc-aprs-map.html">ETCC-registered APRS stations</a>
+        </p>
+    </div>
+
+    <div style="margin-top:50px">
+        APIs:
+        <p>
+            <a href="https://nodes.ukpacketradio.network/swagger/index.html">ETCC/live packet radio connectivity</a>
+        </p>
+        <p>
+            <a href="http://mqtt.pskreporter.info/">PSK Reporter live MQTT feed</a>
+        </p>
+    </div>
+</div>

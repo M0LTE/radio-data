@@ -2,6 +2,7 @@
 using DotNetCoords;
 using DotNetCoords.Datum;
 using MaidenheadLib;
+using System.Text;
 using static ukrepeaterlib.Utils;
 
 namespace ukrepeaterlib;
@@ -39,19 +40,19 @@ public static class ExtensionMethods
         return null;
     }
 
-    public static double? DistanceBetween(this EtccRecord repeater, string myLocator)
+    public static double? DistanceFrom(this EtccRecord repeater, string myLocator)
     {
         if (IsLocator(myLocator))
         {
             var (myLat, myLon) = MaidenheadLocator.LocatorToLatLng(myLocator);
 
-            return DistanceBetween(repeater, (myLat, myLon));
+            return DistanceFrom(repeater, (myLat, myLon));
         }
 
         return null;
     }
 
-    public static double? DistanceBetween(this EtccRecord repeater, (double lat, double lon) myPosition)
+    public static double? DistanceFrom(this EtccRecord repeater, (double lat, double lon) myPosition)
     {
         if (IsLocator(repeater.Locator))
         {
@@ -69,7 +70,7 @@ public static class ExtensionMethods
         return null;
     }
 
-    public static ChirpCsvRow? ToChirpCsvRow(this EtccRecord repeater, int location, string power = "4.0W")
+    public static ChirpCsvRow? ToChirpCsvRow(this EtccRecord repeater, int location, string power = "4.0W", string commentSuffix = "")
     {
         var result = new ChirpCsvRow
         {
@@ -79,7 +80,7 @@ public static class ExtensionMethods
             Duplex = repeater.Rx > repeater.Tx ? '+' : '-',
             Offset = Math.Abs(repeater.Rx - repeater.Tx) / 1000000.0M,
             Mode = GetMode(repeater),
-            Comment = repeater.Town?.Trim(),
+            Comment = GetComment(repeater, commentSuffix),
             TStep = repeater.Band == "2M" ? 12.5 : 25,
             Power = power,
         };
@@ -102,6 +103,21 @@ public static class ExtensionMethods
         }
 
         return result;
+    }
+
+    private static string GetComment(EtccRecord repeater, string commentSuffix)
+    {
+        var sb = new StringBuilder();
+        sb.Append(repeater.Town?.Trim()!);
+
+        if (!string.IsNullOrWhiteSpace(commentSuffix))
+        {
+            sb.Append(" (");
+            sb.Append(commentSuffix);
+            sb.Append(" )");
+        }
+
+        return sb.ToString();
     }
 
     private static string GetMode(EtccRecord repeater)

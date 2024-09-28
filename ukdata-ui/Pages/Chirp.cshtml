@@ -1,0 +1,61 @@
+﻿@page
+@model ChirpModel
+@{
+    ViewData["Title"] = "CHIRP";
+}
+
+<style type="text/css">
+    .container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<script type="text/javascript">
+    function submitclicked() {
+        var locator = document.getElementById("locator").value
+        window.location.replace("api/chirpcsv/" + locator)
+    }
+</script>
+
+<div class="text-center">
+    <h1 class="display-4">CHIRP</h1>
+
+    <div class="container">
+        <a href="https://chirpmyradio.com/">CHIRP</a> is handy software for programming your radio, particularly for FM VHF / UHF repeaters.
+    </div>
+    
+    <div class="container">
+        This page will allow you to input your Maidenhead locator square and get a CHIRP CSV file containing UK repeaters
+        ordered by distance from your location, suitable for importing into CHIRP, to then write to your radio.
+    </div>
+    
+    <div class="container">
+        <label for="locator">Locator:</label>
+        <input type="text" id="locator" name="locator" placeholder="e.g. IO91lk">
+        <input type="button" value="Submit" onclick="submitclicked()">
+    </div>
+
+    <div class="container">
+        If you don't know your Maidenhead locator square, find it <a href="https://grid.radio/" target="_blank">here</a> or <a href="https://whatsmylocator.co.uk/" target="_blank">here</a> (off-site links).
+    </div>
+
+    <div class="container">
+        For information on how to use the CSV file in CHIRP, see <a href="https://chirpmyradio.com/projects/chirp/wiki/CSV_HowTo">here</a>.
+    </div>
+
+    <div class="container">
+        Currently this supports analogue FM repeaters and simplex gateways only.
+    </div>
+
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+    <script>
+        kofiWidgetOverlay.draw('m0lte', {
+            'type': 'floating-chat',
+            'floating-chat.donateButton.text': 'Tip Me',
+            'floating-chat.donateButton.background-color': '#00b9fe',
+            'floating-chat.donateButton.text-color': '#fff'
+        });
+    </script>
+
+</div>

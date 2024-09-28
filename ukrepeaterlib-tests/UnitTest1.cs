@@ -16,7 +16,7 @@ namespace ukrepeaterlib_tests
                 .Where(r => r.Band == "2M" || r.Band == "70CM")
                 .Where(r => r.Type == "AV")
                 .Where(r => r.ModeCodes.Contains(EtccModeFlag.Analogue))
-                .OrderBy(r => r.DistanceBetween("IO91lk") ?? double.MaxValue)
+                .OrderBy(r => r.DistanceFrom("IO91lk") ?? double.MaxValue)
                 .ToList();
 
             int i = 0;
