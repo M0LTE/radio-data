@@ -3,14 +3,16 @@
 public record EtccRecord
 {
     private string repeater = "";
+    private string[] modeCodes = [];
+    private string town = "";
 
     public int Id { get; set; }
     public bool Fac { get; set; }
     public string Type { get; set; } = "";
     public string Status { get; set; } = "";
     public string KeeperCallsign { get; set; } = "";
-    public string Town { get; set; } = "";
-    public string[] ModeCodes { get; set; } = [];
+    public string Town { get => town; set => town = value.Trim(); }
+    public string[] ModeCodes { get => modeCodes; set => modeCodes = value ?? []; }
     public long Tx { get; set; }
     public string Repeater { get => repeater; set => repeater = value.Trim(); }
     public long Rx { get; set; }

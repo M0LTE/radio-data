@@ -54,27 +54,21 @@ public static class ExtensionMethods
 
     public static double? DistanceFrom(this EtccRecord repeater, (double lat, double lon) myPosition)
     {
-        if (IsLocator(repeater.Locator))
+        var repeaterPos = repeater.GetPosition();
+
+        if (repeaterPos == null)
         {
-            var repeaterPos = repeater.GetPosition();
-
-            if (repeaterPos == null)
-            {
-                return null;
-            }
-
-
-            return MaidenheadLocator.Distance((repeaterPos.Value.Latitude, repeaterPos.Value.Longitude), (myPosition.lat, myPosition.lon));
+            return null;
         }
 
-        return null;
+        return MaidenheadLocator.Distance((repeaterPos.Value.Latitude, repeaterPos.Value.Longitude), (myPosition.lat, myPosition.lon));
     }
 
-    public static ChirpCsvRow? ToChirpCsvRow(this EtccRecord repeater, int location, string power = "4.0W", string commentSuffix = "")
+    public static ChirpCsvRow? ToChirpCsvRow(this EtccRecord repeater, string power = "4.0W", string commentSuffix = "")
     {
         var result = new ChirpCsvRow
         {
-            Location = location,
+            Location = 0,
             Name = repeater.Repeater,
             Frequency = repeater.Tx / 1000000.0M,
             Duplex = repeater.Rx > repeater.Tx ? '+' : '-',
@@ -122,7 +116,7 @@ public static class ExtensionMethods
 
     private static string GetMode(EtccRecord repeater)
     {
-        if (repeater.ModeCodes.Contains(EtccModeFlag.Analogue))
+        if (repeater.ModeCodes.Length == 0 || repeater.ModeCodes.Contains(EtccModeFlag.Analogue))
         {
             if (repeater.Txbw == 12.5M)
             {
