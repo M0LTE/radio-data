@@ -114,7 +114,7 @@ public static class ExtensionMethods
         {
             sb.Append(" (");
             sb.Append(commentSuffix);
-            sb.Append(" )");
+            sb.Append(")");
         }
 
         return sb.ToString();
