@@ -2,7 +2,7 @@
 
 public class EtccDataService
 {
-    public async Task<List<EtccRecord>> GetVhfAndUhfAnalogueTargets(string locator)
+    public async Task<List<EtccRecord>> GetVhfAndUhfAnalogueTargets(string locator, int? km)
     {
         var client = new EtccApiClient();
 
@@ -14,6 +14,7 @@ public class EtccDataService
             .Where(r => r.Type == "" || EtccRepeaterType.TryParse(r.Type, out var type) && type.IsVoice)
             .Where(r => (r.ModeCodes.Length == 0 && r.Type == EtccRepeaterType.AnalogueGateway)
                         || r.ModeCodes.Contains(EtccModeFlag.Analogue))
+            .Where(r => km == null || r.DistanceFrom(locator) <= km)
             .OrderBy(r => r.DistanceFrom(locator) ?? double.MaxValue)
             .ToList();
 

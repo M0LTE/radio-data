@@ -22,6 +22,8 @@ public record EtccRecord
     public string Locator { get; set; } = "";
     public decimal DbwErp { get; set; }
     public ExtraDetails ExtraDetails { get; set; } = new();
+
+    public decimal Offset => Rx == 0 || Tx == 0 ? 0 : Math.Abs(Rx - Tx) / 1000000.0M;
 }
 
 public record EtccApiResponse

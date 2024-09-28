@@ -33,7 +33,8 @@
 <script type="text/javascript">
     function submitclicked() {
         var locator = document.getElementById("locator").value
-        window.location.replace("api/chirpcsv/" + locator)
+        var km = document.getElementById("km").value
+        window.location.replace("api/chirpcsv/" + locator + "?km=" + km)
     }
 </script>
 
@@ -54,8 +55,11 @@
     </div>
     
     <div class="container">
-        <label for="locator">Locator:</label>
-        <input type="text" id="locator" name="locator" placeholder="e.g. IO91lk">
+        Within
+        <input type="number" id="km" name="km" value="50" style="width:50px">
+        km of locator
+        <input type="text" id="locator" name="locator" placeholder="e.g. IO91lk" style="width:100px">
+        
         <input type="button" value="Submit" onclick="submitclicked()">
     </div>
 

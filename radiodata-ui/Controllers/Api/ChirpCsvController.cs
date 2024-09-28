@@ -13,11 +13,11 @@ public class ChirpCsvController(EtccDataService etccDataService) : ControllerBas
 {
     // GET api/chirpCsv/IO91lk
     [HttpGet("{locator}")]
-    public async Task<FileResult> Get(string locator)
+    public async Task<FileResult> Get(string locator, int? km)
     {
         int i = 0;
 
-        var chirpRows = (await etccDataService.GetVhfAndUhfAnalogueTargets(locator))
+        var chirpRows = (await etccDataService.GetVhfAndUhfAnalogueTargets(locator, km))
             .Select(r => r.ToChirpCsvRow(commentSuffix: $"{r.DistanceFrom(locator):0}km"))
             .Where(r => r != null)
             .Select(r => r!)

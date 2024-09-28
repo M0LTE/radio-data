@@ -72,7 +72,7 @@ public static class ExtensionMethods
             Name = repeater.Repeater,
             Frequency = repeater.Tx / 1000000.0M,
             Duplex = repeater.Rx > repeater.Tx ? '+' : '-',
-            Offset = Math.Abs(repeater.Rx - repeater.Tx) / 1000000.0M,
+            Offset = repeater.Offset,
             Mode = GetMode(repeater),
             Comment = GetComment(repeater, commentSuffix),
             TStep = repeater.Band == "2M" ? 12.5 : 25,
