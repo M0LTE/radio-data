@@ -11,7 +11,7 @@ namespace ukrepeaterlib_tests
             const string locator = "IO91lk";
             var service = new EtccDataService();
 
-            var vhfAndUhfRepeaters = (await service.GetVhfAndUhfAnalogueTargets(locator))
+            var vhfAndUhfRepeaters = (await service.GetVhfAndUhfAnalogueTargets(locator, true, 50))
                 .Where(r => r.Band == "2M" || r.Band == "70CM")
                 .Where(r => r.Type == "" || EtccRepeaterType.TryParse(r.Type, out var type) && type.IsVoice)
                 .Where(r => (r.ModeCodes.Length == 0 && r.Type == EtccRepeaterType.AnalogueGateway)

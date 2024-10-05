@@ -31,10 +31,54 @@
 </style>
 
 <script type="text/javascript">
-    function submitclicked() {
+    function getUrl(base) {
         var locator = document.getElementById("locator").value
         var km = document.getElementById("km").value
-        window.location.replace("api/chirpcsv/" + locator + "?km=" + km)
+        var personal = document.getElementById("personal").checked
+
+        return base + locator + "?km=" + km + "&personal=" + personal
+    }
+
+    function submitclicked() {
+        window.location.replace(getUrl("api/chirpcsv/"))
+    }
+
+    function showclicked() {
+        var div = document.getElementById("tableDiv")
+        var url = getUrl("api/json/")
+        fetch(url)
+            .then(response => { 
+                if (!response.ok) {
+                    throw new Error(response)
+                }
+                return response.json() 
+            })
+            .then(data => { 
+                var table = "<table class='table table-striped table-bordered table-hover'>\
+                <thead><tr>\
+                    <th>Repeater</th>\
+                    <th>Town</th>\
+                    <th>Distance</th>\
+                    <th>Locator</th>\
+                    <th>Input (MHz)</th>\
+                    <th>Output (MHz)</th>\
+                    <th>CTCSS</th>\
+                </tr></thead><tbody>"
+                data.forEach(row => {
+                    table += "<tr>"
+                    table += "<td>" + row.call + "</td>"
+                    table += "<td>" + row.town + "</td>"
+                    table += "<td>" + row.distance + "</td>"
+                    table += "<td>" + row.locator + "</td>"
+                    table += "<td>" + row.input + "</td>"
+                    table += "<td>" + row.output + "</td>"
+                    table += "<td>" + row.ctcss + "</td>"
+                    table += "</tr>"
+                })
+                table += "</tbody></table>"
+                div.innerHTML = table
+            })
+          .catch(error => div.innerHTML = `error: ${error}`)
     }
 </script>
 
@@ -59,8 +103,15 @@
         <input type="number" id="km" name="km" value="50" style="width:50px">
         km of locator
         <input type="text" id="locator" name="locator" placeholder="e.g. IO91lk" style="width:100px">
-        
-        <input type="button" value="Submit" onclick="submitclicked()">
+        <span class="form-check form-check-inline form-switch">
+            <input class="form-check-input" type="checkbox" id="personal">personal calls
+        </span>
+        <input type="button" value="CHIRP" onclick="submitclicked()">
+        <input type="button" value="Show" onclick="showclicked()">
+    </div>
+
+    <div class="container" id="tableDiv">
+
     </div>
 
     <div class="container">
