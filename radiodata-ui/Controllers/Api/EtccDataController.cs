@@ -15,7 +15,7 @@ public class EtccDataController(EtccDataService etccDataService) : ControllerBas
     [HttpGet("chirpcsv/{locator}")]
     public async Task<FileResult> Get(string locator, int km = 50, bool personal = false)
     {
-        int i = 0;
+        int i = 1;
 
         var chirpRows = (await etccDataService.GetVhfAndUhfAnalogueTargets(locator, personal, km))
             .Select(r => r.ToChirpCsvRow(commentSuffix: $"{r.DistanceFrom(locator):0}km"))
