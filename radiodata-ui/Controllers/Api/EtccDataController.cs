@@ -11,6 +11,22 @@ namespace radiodata_ui.Controllers.Api;
 [ApiController]
 public class EtccDataController(EtccDataService etccDataService) : ControllerBase
 {
+    [HttpGet]
+
+    // GET api/dstarcsv/IO91lk?km=50&personal=true
+    [HttpGet("dstarcsv/{locator}")]
+    public async Task<FileResult> GetDstar(string locator, int km = 50, bool personal = false)
+    {
+        var dstarRows = (await etccDataService.GetDstarTargets(locator, personal, km))
+            .Select(r => r.ToDstarCsvRow())
+            .Where(r => r != null)
+            .Select(r => r!);
+
+        var csv = RadioCsvFileUtils.ToCsv(dstarRows);
+
+        return File(Encoding.UTF8.GetBytes(csv), "text/csv", $"dstar-{locator}.csv");
+    }
+
     // GET api/chirpCsv/IO91lk?km=50&personal=true
     [HttpGet("chirpcsv/{locator}")]
     public async Task<FileResult> Get(string locator, int km = 50, bool personal = false)
@@ -23,7 +39,7 @@ public class EtccDataController(EtccDataService etccDataService) : ControllerBas
             .Select(r => r!)
             .Select(r => r with { Location = i++ });
 
-        var csv = ChirpCsvFileUtils.ToCsv(chirpRows);
+        var csv = RadioCsvFileUtils.ToCsv(chirpRows);
 
         return File(Encoding.UTF8.GetBytes(csv), "text/csv", $"chirp-{locator}.csv");
     }

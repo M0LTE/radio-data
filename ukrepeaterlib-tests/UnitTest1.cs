@@ -26,7 +26,7 @@ namespace ukrepeaterlib_tests
                 .Select(r => r!)
                 .Select(r => r with { Location = i++ });
 
-            var csv = ChirpCsvFileUtils.ToCsv(chirpRows);
+            var csv = RadioCsvFileUtils.ToCsv(chirpRows);
 
             File.WriteAllText("output.csv", csv);
         }

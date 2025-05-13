@@ -64,6 +64,30 @@ public static class ExtensionMethods
         return MaidenheadLocator.Distance((repeaterPos.Value.Latitude, repeaterPos.Value.Longitude), (myPosition.lat, myPosition.lon));
     }
 
+    public static DstarCsvRow? ToDstarCsvRow(this EtccRecord repeater)
+    {
+        var result = new DstarCsvRow
+        {
+            Duplex = repeater.Rx > repeater.Tx ? "DUP+" : "DUP-",
+            Frequency = repeater.Tx / 1000000.0M,
+            Offset = repeater.Offset,
+            Mode = "DV",
+            RepeaterCallsign = repeater.Repeater + "  B",
+            GatewayCallsign = repeater.Repeater + "  G",
+            GroupName = "default",
+            GroupNo = 1,
+            Latitude = 12.34m,
+            Longitude = 56.78m,
+            Name = repeater.Town,
+            SubName = "default",
+            UtcOffset = "0:00",
+            Position = "Approximate",
+            Rpt1Use = "YES",
+        };
+        
+        return result;
+    }
+
     public static ChirpCsvRow? ToChirpCsvRow(this EtccRecord repeater, string power = "4.0W", string commentSuffix = "")
     {
         var result = new ChirpCsvRow
@@ -126,6 +150,11 @@ public static class ExtensionMethods
             {
                 return "FM";
             }
+        }
+
+        if (repeater.ModeCodes.Contains("D"))
+        {
+            return "D-STAR";
         }
 
         throw new NotImplementedException();
