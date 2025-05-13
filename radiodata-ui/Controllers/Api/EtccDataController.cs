@@ -13,8 +13,8 @@ public class EtccDataController(EtccDataService etccDataService) : ControllerBas
 {
     [HttpGet]
 
-    // GET api/dstarcsv/IO91lk?km=50&personal=true
-    [HttpGet("dstarcsv/{locator}")]
+    // GET api/icomcsv/IO91lk?km=50&personal=true
+    [HttpGet("icomcsv/{locator}")]
     public async Task<FileResult> GetDstar(string locator, int km = 50, bool personal = false)
     {
         var dstarRows = (await etccDataService.GetDstarTargets(locator, personal, km))

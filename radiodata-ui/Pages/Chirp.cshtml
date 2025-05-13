@@ -43,6 +43,10 @@
         window.location.replace(getUrl("api/chirpcsv/"))
     }
 
+    function submiticomclicked() {
+        window.location.replace(getUrl("api/icomcsv/"))
+    }
+
     function showclicked() {
         var div = document.getElementById("tableDiv")
         var url = getUrl("api/json/")
@@ -107,6 +111,7 @@
             <input class="form-check-input" type="checkbox" id="personal">personal calls
         </span>
         <input type="button" value="CHIRP" onclick="submitclicked()">
+        <input type="button" value="Icom" onclick="submiticomclicked()">
         <input type="button" value="Show" onclick="showclicked()">
     </div>
 

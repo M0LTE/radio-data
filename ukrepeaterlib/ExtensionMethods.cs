@@ -2,6 +2,7 @@
 using DotNetCoords;
 using DotNetCoords.Datum;
 using MaidenheadLib;
+using System.Globalization;
 using System.Text;
 using static ukrepeaterlib.Utils;
 
@@ -72,13 +73,13 @@ public static class ExtensionMethods
             Frequency = repeater.Tx / 1000000.0M,
             Offset = repeater.Offset,
             Mode = "DV",
-            RepeaterCallsign = repeater.Repeater + "  B",
-            GatewayCallsign = repeater.Repeater + "  G",
+            RepeaterCallsign = repeater.Repeater.Contains('-') ? repeater.Repeater : repeater.Repeater + "  B",
+            GatewayCallsign = repeater.Repeater.Contains('-') ? repeater.Repeater : repeater.Repeater + "  G",
             GroupName = "default",
             GroupNo = 1,
-            Latitude = 12.34m,
-            Longitude = 56.78m,
-            Name = repeater.Town,
+            Latitude = GetLatitude(repeater),
+            Longitude = GetLongitude(repeater),
+            Name = ToTitleCase(repeater.Town),
             SubName = "default",
             UtcOffset = "0:00",
             Position = "Approximate",
@@ -86,6 +87,29 @@ public static class ExtensionMethods
         };
         
         return result;
+    }
+
+    private static string ToTitleCase(string town) => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(town.ToLower());
+    private static decimal GetLongitude(EtccRecord repeater) => GetLatLon(repeater)?.lon ?? 0;
+    private static decimal GetLatitude(EtccRecord repeater) => GetLatLon(repeater)?.lat ?? 0;
+
+    private static (decimal lat, decimal lon)? GetLatLon(EtccRecord repeater)
+    {
+        if (!string.IsNullOrWhiteSpace(repeater.ExtraDetails?.Ngr))
+        {
+            var osRef = new OSRef(To8CharNgr(repeater.ExtraDetails.Ngr));
+            var latLng = osRef.ToLatLng();
+            return ((decimal)Math.Round(latLng.Latitude, 6), (decimal)Math.Round(latLng.Longitude, 6));
+        }
+        else if (!string.IsNullOrWhiteSpace(repeater.Locator))
+        {
+            var (lat, lon) = MaidenheadLocator.LocatorToLatLng(repeater.Locator);
+            return ((decimal)Math.Round(lat, 6), (decimal)Math.Round(lon, 6));
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public static ChirpCsvRow? ToChirpCsvRow(this EtccRecord repeater, string power = "4.0W", string commentSuffix = "")
