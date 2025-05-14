@@ -2,7 +2,7 @@
 
 namespace chirpcsvlib;
 
-public record DstarCsvRow
+public record IcomCsvRow
 {
     [Name("Group No")]
     public required int GroupNo { get; set; }

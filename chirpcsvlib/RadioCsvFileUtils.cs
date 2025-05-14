@@ -15,7 +15,7 @@ public static class RadioCsvFileUtils
         return stringBuilder.ToString();
     }
 
-    public static string ToCsv(IEnumerable<DstarCsvRow> rows)
+    public static string ToCsv(IEnumerable<IcomCsvRow> rows)
     {
         var stringBuilder = new StringBuilder();
         using var writer = new StringWriter(stringBuilder);

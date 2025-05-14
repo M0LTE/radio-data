@@ -65,18 +65,18 @@ public static class ExtensionMethods
         return MaidenheadLocator.Distance((repeaterPos.Value.Latitude, repeaterPos.Value.Longitude), (myPosition.lat, myPosition.lon));
     }
 
-    public static DstarCsvRow? ToDstarCsvRow(this EtccRecord repeater)
+    public static IcomCsvRow? ToIcomCsvRow(this EtccRecord repeater)
     {
-        var result = new DstarCsvRow
+        var result = new IcomCsvRow
         {
             Duplex = repeater.Rx > repeater.Tx ? "DUP+" : "DUP-",
             Frequency = repeater.Tx / 1000000.0M,
             Offset = repeater.Offset,
-            Mode = "DV",
-            RepeaterCallsign = repeater.Repeater.Contains('-') ? repeater.Repeater : repeater.Repeater + "  B",
-            GatewayCallsign = repeater.Repeater.Contains('-') ? repeater.Repeater : repeater.Repeater + "  G",
-            GroupName = "default",
-            GroupNo = 1,
+            Mode = repeater.Type,
+            RepeaterCallsign = repeater.Type == "DV" ? (repeater.Repeater.Contains('-') ? repeater.Repeater : repeater.Repeater + "  B") : repeater.Repeater,
+            GatewayCallsign = repeater.Type == "DV" ? (repeater.Repeater.Contains('-') ? repeater.Repeater : repeater.Repeater + "  G") : repeater.Repeater,
+            GroupName = "",
+            GroupNo = 0,
             Latitude = GetLatitude(repeater),
             Longitude = GetLongitude(repeater),
             Name = ToTitleCase(repeater.Town),
