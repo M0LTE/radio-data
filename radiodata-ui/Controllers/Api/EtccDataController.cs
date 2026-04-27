@@ -79,8 +79,8 @@ public class EtccDataController(EtccDataService etccDataService) : ControllerBas
                 distance = $"{r.DistanceFrom(locator):0}km",
                 locator = r.Locator.CapitaliseLocator(),
                 call = r.Repeater,
-                input = (r.Rx == 0 ? r.Tx : r.Rx / 1000000.0).ToString("0.000"),
-                output = (r.Tx == 0 ? r.Rx : r.Tx / 1000000.0).ToString("0.000"),
+                input = (r.Rx == 0 ? r.Tx : r.Rx).ToMHzString(),
+                output = (r.Tx == 0 ? r.Rx : r.Tx).ToMHzString(),
                 ctcss = r.Ctcss.ToString("0.0"),
             });
 

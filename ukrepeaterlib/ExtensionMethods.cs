@@ -10,6 +10,8 @@ namespace ukrepeaterlib;
 
 public static class ExtensionMethods
 {
+    public static string ToMHzString(this long frequencyHz) => (frequencyHz / 1000000.0M).ToString("0.000#", CultureInfo.InvariantCulture);
+
     public static LatLon? GetPosition(this EtccRecord repeater)
     {
         if (IsNgr(repeater.ExtraDetails?.Ngr))
