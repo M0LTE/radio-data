@@ -146,7 +146,7 @@ namespace DotNetCoords.Ellipsoid
     {
     }
 
-    private static T _reference;
+    private static T? _reference;
 
     /// <summary>
     /// Get the static instance of this ellipsoid.
@@ -156,10 +156,7 @@ namespace DotNetCoords.Ellipsoid
     {
       get
       {
-        if (_reference == null)
-        {
-          _reference = new T();
-        }
+        _reference ??= new T();
         return _reference;
       }
     }

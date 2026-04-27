@@ -55,13 +55,13 @@ namespace DotNetCoords.Datum
     /// Get the name of this Datum.
     /// </summary>
     /// <value>The name of this Datum.</value>
-    public string Name { get; internal set; }
+    public string Name { get; internal set; } = string.Empty;
 
     /// <summary>
     /// Get the reference ellipsoid associated with this Datum.
     /// </summary>
     /// <value>The reference ellipsoid associated with this Datum.</value>
-    public Ellipsoid.Ellipsoid ReferenceEllipsoid { get; internal set; }
+    public Ellipsoid.Ellipsoid ReferenceEllipsoid { get; internal set; } = null!;
 
     /// <summary>
     /// Gets the scaling factor used by the Helmert Transformation when converting between datums.
@@ -128,7 +128,7 @@ namespace DotNetCoords.Datum
   /// <typeparam name="T">The type of the datum</typeparam>
   public abstract class Datum<T> : Datum where T : Datum, new()
   {
-    private static T _reference;
+    private static T? _reference;
 
     /// <summary>
     /// Get the static instance of this datum.
@@ -138,10 +138,7 @@ namespace DotNetCoords.Datum
     {
       get
       {
-        if (_reference == null)
-        {
-          _reference = new T();
-        }
+        _reference ??= new T();
         return _reference;
       }
     }
