@@ -17,3 +17,12 @@ cd /home/ubuntu/radiodata-ui
 sudo docker-compose pull
 sudo docker-compose up -d
 ```
+
+## Deployment
+
+The `radiodata-ui` app is hosted on a Proxmox LXC (`ham-apps`) as a Docker container.
+
+- **Build:** `docker buildx build --platform linux/amd64 -t m0lte/radiodata-ui .`
+- **Run:** `docker run -d --restart unless-stopped -p 8532:8080 m0lte/radiodata-ui`
+- **Data:** UK repeater data via `ukrepeaterlib`; no database.
+- **Public:** `data.m0lte.uk`, via a Cloudflare tunnel → `localhost:8532`.
