@@ -1,12 +1,18 @@
-﻿namespace ukrepeaterlib;
+namespace ukrepeaterlib;
 
 public class EtccDataService
 {
+    private readonly EtccRepository _repository;
+
+    public EtccDataService(EtccRepository repository) => _repository = repository;
+
+    // Convenience for callers not using DI (e.g. tests): a self-contained repository
+    // backed by a direct API client with no disk cache.
+    public EtccDataService() : this(new EtccRepository(new EtccApiClient())) { }
+
     public async Task<IEnumerable<EtccRecord>> GetVhfAndUhfTargets(string locator, bool includePersonalCalls, int? km)
     {
-        var client = new EtccApiClient();
-
-        var data = await client.GetAll();
+        var data = await _repository.GetAllAsync();
 
         var vhfAndUhfRepeaters = data
             .Where(r => includePersonalCalls == true || r.Repeater.StartsWith("GB") || r.Repeater.StartsWith("MB"))
